@@ -1,0 +1,19 @@
+<div class="container-fluid" *ngIf="!isContactInfo">
+  <div class="row">
+    <div class="col-lg">
+      <div class="alert alert-dark" role="alert">
+        Contactos
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg" *ngFor="let item of contactos"></div>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="!isContactInfo">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-secondary">Agregar Contacto</button>
+  </div>
+</div>
+<div class="container-fluid">
+</div>
