@@ -39,7 +39,7 @@ namespace PocAgenda.Api.Controllers
                     if (result == SignInResult.Success)
                     {
                         IList<Claim> claims = UserManager.GetClaimsAsync(user).Result;
-                        return Ok(new ResponseDataDto<string> { Data = user.Id });
+                        return Ok(new ResponseDataDto<string> { Data = user.Id, Success = true });
                     }
                     else
                     {
