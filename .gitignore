@@ -34,3 +34,4 @@ packages/
 **/bin
 **/obj
 **/*.jfm
+**/*.dbmdl
