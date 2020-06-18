@@ -1,0 +1,73 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let phone of phones" (click)="!isEditing && updatePhone(phone)">
+          Telefono {{ (phone.code && phone.code.length > 0) ? '('+ phone.code +') ': '' }}{{phone.phoneNumber }} | Tipo: {{ phoneTypeLabel(phone.phoneTypeId) }} |
+          {{ phone.address ? ( phone.address + ' C.P.' + phone.zipCode ) : '' }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row mt-1" *ngIf="!isEditing">
+    <div class="col-lg">
+      <button type="button" class="btn btn-outline-success" *ngIf="types.length > phones.length"
+        (click)="openPhoneForm()">Agregar telefono</button>
+    </div>
+  </div>
+  <div class="row" *ngIf="isEditing">
+    <div class="col-md">
+      <form name="form" (ngSubmit)="f.form.valid && savePhone(f.form)" #f="ngForm" novalidate>
+        <div class="col-lg">
+          <div class="form-group">
+            <label for="phoneType">Tipo<span class="text-danger"
+                *ngIf="phoneType.invalid && (f.submitted || phoneType.dirty || phoneType.touched)">*</span></label>
+            <select class="form-control" name="phoneType" [(ngModel)]="currentPhone.phoneTypeId" #phoneType="ngModel"
+              required>
+              <option *ngFor="let type of filteredTypes" [ngValue]="type.id">
+                {{type.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg">
+          <div class="form-group">
+            <label for="phoneNumber">Número Telefonico (10 dig.)<span class="text-danger"
+                *ngIf="phoneNumber.invalid && (f.submitted || phoneNumber.dirty || phoneNumber.touched)">*</span></label>
+            <input id="phoneNumber" name="phoneNumber" class="form-control" required minlength="10" maxlength="10"
+              [(ngModel)]="currentPhone.phoneNumber" #phoneNumber="ngModel" autocomplete="off" [pattern]="phonePattern">
+          </div>
+        </div>
+        <div class="col-lg">
+          <div class="form-group">
+            <label for="code">Clave (3 dig.)<span class="text-danger"
+                *ngIf="code.invalid && (f.submitted || code.dirty || code.touched)">*</span></label>
+            <input id="code" name="code" class="form-control" maxlength="3" [(ngModel)]="currentPhone.code"
+              #code="ngModel" autocomplete="off" [pattern]="codePattern">
+          </div>
+        </div>
+        <div class="col-lg">
+          <div class="form-group">
+            <label for="address">Dirección</label>
+            <input id="address" name="address" class="form-control" maxlength="128" [(ngModel)]="currentPhone.address"
+              #address="ngModel" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-lg">
+          <div class="form-group">
+            <label for="zipCode">Codigo Postal<span class="text-danger"
+                *ngIf="zipCode.invalid && (f.submitted || zipCode.dirty || zipCode.touched)">*</span></label>
+            <input id="zipCode" name="zipCode" class="form-control" minlength="5" maxlength="5"
+              [(ngModel)]="currentPhone.zipCode" #zipCode="ngModel" autocomplete="off" [pattern]="zipCodePattern">
+          </div>
+        </div>
+        <div class="col-lg">
+          <div class="btn-group mt-1" role="group">
+            <button type="button" class="btn btn-secondary" (click)="closePhoneForm()">Cancelar</button>
+            <button type="submit" class="btn btn-success" [disabled]="!f.form.valid">Añadir</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

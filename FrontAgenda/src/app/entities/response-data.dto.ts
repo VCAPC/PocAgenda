@@ -1,5 +1,6 @@
 export class ResponseDataDto<T> {
     id: number;
+    success: boolean;
     data: T;
     statusCode: number;
     message: string;

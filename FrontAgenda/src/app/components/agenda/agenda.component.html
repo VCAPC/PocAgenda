@@ -7,13 +7,57 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg" *ngFor="let item of contactos"></div>
+    <div class="col-lg" *ngFor="let item of contactos">
+      <div class="card" (click)="editContact(item)">
+        <div class="card-body">
+          <h5 class="card-title">{{item.firstName}}{{ ' ' + item.lastName }}</h5>
+          <button class="btn btn-danger float-right" (click)="deleteContact(item, $event)"><span class="text-white">&times;</span></button>
+          <div *ngIf="item.phones.length === 1">
+            <p class="card-text">Telefono {{ item.phones[0].phoneNumber }}</p>
+          </div>
+          <div *ngIf="item.phones.length > 1">
+            <p class="card-text">Telefonos: {{ item.phones.length }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="container-fluid" *ngIf="!isContactInfo">
-  <div class="btn-group" role="group">
-    <button type="button" class="btn btn-secondary">Agregar Contacto</button>
+  <div class="row">
+    <div class="col-lg mt-2">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-secondary" (click)="addContact()">Agregar Contacto</button>
+      </div>
+    </div>
   </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="isContactInfo">
+  <div class="row" *ngIf="currentContact">
+    <div class="col-lg">
+      <form name="form" (ngSubmit)="f.form.valid && saveContact()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label for="firstName">Nombre<span class="text-danger" *ngIf="firstName.invalid && (f.submitted || firstName.dirty || firstName.touched)">*</span></label>
+          <input type="text" class="form-control" #firstName="ngModel" name="firstName"
+            [(ngModel)]="currentContact.firstName" required maxlength="64" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="middleName">Nombre (cont.)</label>
+          <input type="text" class="form-control" #middleName="ngModel" name="middleName"
+            [(ngModel)]="currentContact.middleName" maxlength="64" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="lastName">Apellidos<span class="text-danger" *ngIf="lastName.invalid && (f.submitted || lastName.dirty || lastName.touched)">*</span></label>
+          <input type="text" class="form-control" #lastName="ngModel" name="lastName"
+            [(ngModel)]="currentContact.lastName" required maxlength="128" autocomplete="off">
+        </div>
+        <app-phone-list [(phones)]="currentContact.phones"></app-phone-list>
+        <div class="btn-group mt-2" role="group">
+          <button type="button" class="btn btn-secondary" (click)="cancelContact()">Cancelar</button>
+          <button type="submit" class="btn btn-primary"
+            [disabled]="currentContact.phones.length === 0 || !f.form.valid">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

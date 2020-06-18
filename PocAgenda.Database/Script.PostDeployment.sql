@@ -11,3 +11,5 @@ Plantilla de script posterior a la implementación
 */
 
 :r .\ScriptsPD\Script_Users.sql
+:r .\ScriptsPD\Script_Contacts.sql
+:r .\ScriptsPD\Script_ContactPhones.sql

@@ -8,6 +8,7 @@ namespace PocAgenda.DataLayer
     public class DataContext : IdentityDbContext
     {
         public DbSet<Contacts> Contacts { get; set; }
+        public DbSet<ContactPhones> ContactPhones { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
@@ -19,6 +20,9 @@ namespace PocAgenda.DataLayer
             builder.Entity<Contacts>()
                 .ToTable("Contacts", "dbo")
                 .HasKey(x => x.Id);
+            builder.Entity<Contacts>()
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd();
             builder.Entity<Contacts>()
                 .Property(x => x.FirstName)
                 .HasMaxLength(64)
@@ -34,15 +38,31 @@ namespace PocAgenda.DataLayer
                 .Property(x => x.UserId)
                 .HasMaxLength(450)
                 .IsRequired();
+            builder.Entity<Contacts>()
+                .HasMany(x => x.Phones)
+                .WithOne(c => c.Contact)
+                .HasForeignKey(c => c.ContactId)
+                .HasPrincipalKey(x => x.Id);
 
             builder.Entity<ContactPhones>()
                 .ToTable("ContactPhones", "dbo")
                 .HasKey(x => x.Id);
             builder.Entity<ContactPhones>()
-                .HasOne(c => c.Contact)
-                .WithMany(x => x.Phones)
-                .HasForeignKey(c => c.ContactId);
-
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd();
+            builder.Entity<ContactPhones>()
+                .Property(x => x.Address)
+                .HasMaxLength(128);
+            builder.Entity<ContactPhones>()
+                .Property(x => x.Code)
+                .HasMaxLength(3);
+            builder.Entity<ContactPhones>()
+                .Property(x => x.PhoneNumber)
+                .HasMaxLength(10)
+                .IsRequired();
+            builder.Entity<ContactPhones>()
+                .Property(x => x.ZipCode)
+                .HasMaxLength(5);
 
             base.OnModelCreating(builder);
         }

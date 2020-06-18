@@ -81,5 +81,7 @@
   <ItemGroup>
     <None Include="ScriptsPD\Script_Users.sql" />
     <None Include="PocAgenda.Database.Local.publish.xml" />
+    <None Include="ScriptsPD\Script_Contacts.sql" />
+    <None Include="ScriptsPD\Script_ContactPhones.sql" />
   </ItemGroup>
 </Project>

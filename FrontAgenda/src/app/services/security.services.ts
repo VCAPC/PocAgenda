@@ -9,7 +9,7 @@ export class SecurityServices {
     }
 
     login(model: LoginDto): Promise<any> {
-        const url = `${environment.apiHostUrl}${environment.routes.post.userLogin}`;
+        const url = `${environment.apiHostUrl}${environment.routes.posts.userLogin}`;
 
         return this.http.post(url, model)
             .toPromise();
