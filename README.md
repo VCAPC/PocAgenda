@@ -6,3 +6,5 @@
 4. (Opcional) El proyecto cuenta ya con una verson precompilada de la solucion, en caso de necesitar compilarla nuevamente ir al folder FrontAgenda y hacer  
 4.1 `npm -i` en caso de no tener la version mas resiente de los plugins  
 4.2 `ng build` para que se generen nuevamente los archivos en el folder de wwwroot
+
+La aplicación hace un pseudo login con el unico usuario registrado y sobre él hace los registro
